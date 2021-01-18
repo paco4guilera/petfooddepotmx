@@ -1,0 +1,49 @@
+@media (max-width: 768px) {
+    .img-cel {
+        max-height: 53px;
+        margin: auto;
+    }
+}
+.d-block {
+    display: block !important;
+}
+.search-combo {
+    max-width: 100%;
+}
+.texto-combo {
+    font-size: 18px !important;
+}
+.btn-add {
+    padding: 0px 0px;
+}
+.btn-add button {
+    height: 44px;
+    margin-left: 2px;
+}
+.colorear-Renglon {
+    background-color: rgba(122, 179, 68, 0.24);
+    /* background-color: rgba(123, 255, 0, 0.808); */
+    margin-bottom: 5px;
+}
+
+@media (min-width: 768px) {
+    .ocultar-menu {
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .ocultar-iconos {
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .tabla-datos-venta {
+        width: 100%;
+    }
+}
+@media (min-width: 769px) {
+    .tabla-datos-venta {
+        width: 50%;
+        margin-left: auto;
+    }
+}
