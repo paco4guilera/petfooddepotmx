@@ -31,7 +31,7 @@ class ControladorMarcas
                         closeOnConfirm: false 
                     }).then((result)=>{
                         if(result.value){
-                            window.location="marcas";
+                            window.location="productos";
                         }
                     });
                     </script>';
@@ -100,7 +100,7 @@ class ControladorMarcas
                         closeOnConfirm: false 
                     }).then((result)=>{
                         if(result.value){
-                            window.location="marcas";
+                            window.location="productos";
                         }
                     });
                     </script>';
@@ -116,7 +116,7 @@ class ControladorMarcas
                         closeOnConfirm: false 
                     }).then((result)=>{
                         if(result.value){
-                            window.location="marcas";
+                            window.location="productos";
                         }
                     });
                     </script>';
@@ -149,7 +149,7 @@ class ControladorMarcas
                         closeOnConfirm: false 
                     }).then((result)=>{
                         if(result.value){
-                            window.location="marcas";
+                            window.location="productos";
                         }
                     });
                     </script>';
