@@ -122,7 +122,7 @@ Agregar producto
                             <!-- ENTRADA PARA PRECIO COMPRA -->
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
-                                <input type="number" class="form-control input-lg" name="nuevoPrecioCompra" id="nuevoPrecioCompra" min="0" placeholder="Precio De Compra" required>
+                                <input type="number" step="any" class="form-control input-lg" name="nuevoPrecioCompra" id="nuevoPrecioCompra" min="0" placeholder="Precio De Compra" required>
                             </div>
                             <br>
                         </div>
@@ -223,7 +223,7 @@ Editar producto
                             <!-- ENTRADA PARA PRECIO COMPRA -->
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-arrow-up"></i></span>
-                                <input type="number" class="form-control input-lg" name="editarPrecioCompra" id="editarPrecioCompra" min="0" placeholder="Precio compra" required>
+                                <input type="number" step="any" class="form-control input-lg" name="editarPrecioCompra" id="editarPrecioCompra" min="0" placeholder="Precio compra" required>
                             </div>
                             <br>
                         </div>

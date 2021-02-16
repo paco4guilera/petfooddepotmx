@@ -353,7 +353,7 @@ $(document).on("click", ".btnEliminarProductoSucursal", function () {
     /* Read more about isConfirmed, isDenied below */
     if (result.value) {
         window.location = "index.php?ruta=sucursal&nombreProductoSucursal="+nombreProducto+"&nombreSucursal="+nombreSucursal;
-    } 
+		} 
     })
 })
 

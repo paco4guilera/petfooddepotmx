@@ -81,7 +81,7 @@ class ControladorClientes
     }
     static public function ctrMostrarTipos($item, $valor)
     {
-        $tabla = "tiposClientes";
+        $tabla = "tiposclientes";
         $respuesta = ModeloClientes::MdlMostrarTipos($tabla, $item, $valor);
         return $respuesta;
     }
