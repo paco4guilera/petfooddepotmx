@@ -23,6 +23,14 @@ if ($_SESSION["rol"] == "Vendedor") {
     <!-- Main content -->
     <section class="content">
         <div class="box">
+        <div class="box-header with-border">
+            <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                <span>
+                    <i class="fa fa-calendar"></i> Rango Fecha
+                </span>
+                <i class="fa fa-caret-down"></i>
+            </button>
+        </div>
             <div class="box-body">
                 <table class="table table-bordered table-condensed  table-hover dt-responsive tabla-hventas" style="width:100%">
                     <thead>

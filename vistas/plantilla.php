@@ -36,6 +36,8 @@ $_SESSION['Ancho'] = null;
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="vistas/plugins/iCheck/all.css">
     <!-- TIME PICKER-->
+
+    <link rel="stylesheet" href="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="vistas/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css">
     <!-- jQuery 3 -->
     <script src="vistas/bower_components/jquery/dist/jquery.min.js"></script>
@@ -60,6 +62,7 @@ $_SESSION['Ancho'] = null;
     <script src="vistas/bower_components/select2/dist/js/select2.full.js"></script>
     <!-- iCheck 1.0.1 -->
     <script src="vistas/plugins/iCheck/icheck.min.js"></script>
+    <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 
     <!-- InputMask -->
     <script src="vistas/plugins/input-mask/jquery.inputmask.js"></script>
@@ -69,7 +72,8 @@ $_SESSION['Ancho'] = null;
     <!-- jQuery Number -->
     <script src="vistas/plugins/jqueryNumber/jquerynumber.min.js"></script>
     <!-- jQuery DATEPICKER-->
-    <script src="vistas/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+    <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="vistas/bower_components/moment/min/moment.min.js"></script>
 
     <!-- daterangepicker http://www.daterangepicker.com/-->
     <!-- <script src="vistas/bower_components/moment/min/moment.min.js"></script>

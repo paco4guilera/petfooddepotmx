@@ -44,7 +44,7 @@ class ModeloClientes
     {
         date_default_timezone_set('America/Mexico_City');
         $fecha = date('Y-m-d');
-        $stmt = Conexion::conectar()->prepare("SELECT T.tipo_descuento, C.cliente_tipo,(SELECT SUM(puntos_cantidad) FROM puntos WHERE cliente_id=:$item AND(puntos_caducidad > :puntos_caducidad)) AS puntos FROM tiposClientes AS T 
+        $stmt = Conexion::conectar()->prepare("SELECT T.tipo_descuento, C.cliente_tipo,(SELECT SUM(puntos_cantidad) FROM puntos WHERE cliente_id=:$item AND(puntos_caducidad > :puntos_caducidad)) AS puntos FROM tiposclientes AS T 
                                                 JOIN clientes AS C ON T.tipo_nombre = C.cliente_tipo
                                                 WHERE $item=:$item");
         $stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
