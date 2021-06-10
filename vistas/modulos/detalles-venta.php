@@ -19,6 +19,7 @@
                 <button class="btn btn-primary btnVolverVentas">
                     Volver
                 </button>
+
                 <?php
                 echo '<h2>Detalles De La Venta: ' . $_SESSION["idVenta"] . ' </h2>';
                 ?>

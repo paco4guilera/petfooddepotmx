@@ -62,6 +62,8 @@ $_SESSION['Ancho'] = null;
     <script src="vistas/bower_components/select2/dist/js/select2.full.js"></script>
     <!-- iCheck 1.0.1 -->
     <script src="vistas/plugins/iCheck/icheck.min.js"></script>
+    <!-- date range picker -->
+    <script src="vistas/bower_components/moment/min/moment.min.js"></script>
     <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
 
     <!-- InputMask -->
@@ -72,12 +74,9 @@ $_SESSION['Ancho'] = null;
     <!-- jQuery Number -->
     <script src="vistas/plugins/jqueryNumber/jquerynumber.min.js"></script>
     <!-- jQuery DATEPICKER-->
-    <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script src="vistas/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
     <script src="vistas/bower_components/moment/min/moment.min.js"></script>
 
-    <!-- daterangepicker http://www.daterangepicker.com/-->
-    <!-- <script src="vistas/bower_components/moment/min/moment.min.js"></script>
-    <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script> -->
 
     <!-- Morris.js charts http://morrisjs.github.io/morris.js/-->
     <script src="vistas/bower_components/raphael/raphael.min.js"></script>
