@@ -56,6 +56,99 @@ class ModeloVentas
         $stmt = null;
     }
     /*=============================================
+	MOSTRAR VENTAS POR RANGO
+	=============================================*/
+
+    static public function mdlRangoVentas($fechaInicial, $fechaFinal)
+    {
+
+        if ($fechaInicial == null) {
+
+            $stmt = Conexion::conectar()->prepare("SELECT V.venta_id,C.cliente_id,C.cliente_telefono,C.cliente_correo, 
+                                                    C.cliente_nombre, V.venta_metodo_pago, 
+                                                    V.venta_total, C.cliente_tipo, V.venta_descuento_cliente, 
+                                                    V.venta_descuento_puntos, V.venta_descuento_adicional, 
+                                                    V.venta_iva, V.venta_impuesto_adicional, V.venta_neto,
+                                                    V.venta_fecha,U.usuario_nombre, V.sucursal_nombre, 
+                                                    V.sesion_id, V.venta_productos,V.venta_puntos
+                                                    From ventas AS V
+                                                    JOIN clientes AS C ON V.cliente_id= C.cliente_id
+                                                    JOIN sesiones AS S ON S.sesion_id=V.sesion_id
+                                                    JOIN usuarios AS U on S.usuario_login= U.usuario_login
+                                                    ORDER BY V.venta_fecha DESC");
+
+            $stmt->execute();
+        //var_dump("sin filtro");
+            return $stmt->fetchAll();
+        } else if ($fechaInicial == $fechaFinal){
+            $stmt = Conexion::conectar()->prepare("SELECT V.venta_id,C.cliente_id,C.cliente_telefono,C.cliente_correo, 
+                                                    C.cliente_nombre, V.venta_metodo_pago, 
+                                                    V.venta_total, C.cliente_tipo, V.venta_descuento_cliente, 
+                                                    V.venta_descuento_puntos, V.venta_descuento_adicional, 
+                                                    V.venta_iva, V.venta_impuesto_adicional, V.venta_neto,
+                                                    V.venta_fecha,U.usuario_nombre, V.sucursal_nombre, 
+                                                    V.sesion_id, V.venta_productos,V.venta_puntos
+                                                    From ventas AS V
+                                                    JOIN clientes AS C ON V.cliente_id= C.cliente_id
+                                                    JOIN sesiones AS S ON S.sesion_id=V.sesion_id
+                                                    JOIN usuarios AS U on S.usuario_login= U.usuario_login
+                                                    WHERE V.venta_fecha LIKE '%$fechaFinal%'");
+
+            $stmt -> bindParam(":V.venta_fecha", $fechaFinal, PDO::PARAM_STR);
+            $stmt -> execute();
+            //var_dump($stmt->execute());
+            return $stmt -> fetchAll();
+        }else {
+            $unixTime = time();
+            $timeZone = new \DateTimeZone('America/Mexico_City');
+            $fechaActual = new \DateTime();
+            $fechaActual->setTimestamp($unixTime)->setTimezone($timeZone);
+            $fechaActual-> add(new DateInterval("P1D"));
+            $fechaActualMasUno = $fechaActual->format("Y-m-d");
+
+            $fechaFinal2 = new DateTime($fechaFinal);
+            $fechaFinal2-> add(new DateInterval("P1D"));
+            $fechaFinalMasUno = $fechaFinal2->format("Y-m-d");
+
+            if($fechaFinalMasUno == $fechaActualMasUno){
+                $stmt = Conexion::conectar()->prepare("SELECT V.venta_id,C.cliente_id,C.cliente_telefono,C.cliente_correo, 
+                                                    C.cliente_nombre, V.venta_metodo_pago, 
+                                                    V.venta_total, C.cliente_tipo, V.venta_descuento_cliente, 
+                                                    V.venta_descuento_puntos, V.venta_descuento_adicional, 
+                                                    V.venta_iva, V.venta_impuesto_adicional, V.venta_neto,
+                                                    V.venta_fecha,U.usuario_nombre, V.sucursal_nombre, 
+                                                    V.sesion_id, V.venta_productos ,V.venta_puntos
+                                                    From ventas AS V
+                                                    JOIN clientes AS C ON V.cliente_id= C.cliente_id
+                                                    JOIN sesiones AS S ON S.sesion_id=V.sesion_id
+                                                    JOIN usuarios AS U on S.usuario_login= U.usuario_login 
+                                                    WHERE V.venta_fecha BETWEEN '$fechaInicial' AND '$fechaFinalMasUno'
+                                                    ORDER BY V.venta_fecha DESC");
+            
+            }else{
+                
+                $stmt = Conexion::conectar()->prepare("SELECT V.venta_id,C.cliente_id,C.cliente_telefono,C.cliente_correo, 
+                                                        C.cliente_nombre, V.venta_metodo_pago, 
+                                                        V.venta_total, C.cliente_tipo, V.venta_descuento_cliente, 
+                                                        V.venta_descuento_puntos, V.venta_descuento_adicional, 
+                                                        V.venta_iva, V.venta_impuesto_adicional, V.venta_neto,
+                                                        V.venta_fecha,U.usuario_nombre, V.sucursal_nombre, 
+                                                        V.sesion_id, V.venta_productos ,V.venta_puntos
+                                                        From ventas AS V
+                                                        JOIN clientes AS C ON V.cliente_id= C.cliente_id
+                                                        JOIN sesiones AS S ON S.sesion_id=V.sesion_id
+                                                        JOIN usuarios AS U on S.usuario_login= U.usuario_login 
+                                                        WHERE V.venta_fecha BETWEEN '$fechaInicial' AND '$fechaFinal'
+                                                        ORDER BY V.venta_fecha DESC");    
+            }
+            $stmt->execute();
+            //var_dump($stmt->execute());
+            return $stmt->fetchAll();
+        }
+
+        $stmt = null;
+    }
+    /*=============================================
     Traer última venta para registrar el préstamo                             
     =============================================*/
     static public function mdlUltimaVenta($cliente)
