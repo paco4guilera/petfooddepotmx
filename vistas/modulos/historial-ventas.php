@@ -32,7 +32,7 @@ if ($_SESSION["rol"] == "Vendedor") {
             </button>
         </div>
             <div class="box-body">
-                <table class="table table-bordered table-condensed  table-hover dt-responsive tabla-hventas" style="width:100%">
+                <table class="table table-bordered table-condensed  table-hover dt-responsive tabla- hventas tabla-plugin" style="width:100%">
                     <thead>
                         <tr>
                             <th style="width: 1%;">#</th>
@@ -47,11 +47,43 @@ if ($_SESSION["rol"] == "Vendedor") {
                             <th style="width: 1%;"></th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <?php
+                                if (isset($_GET["fechaInicial"])) {
 
+                                $fechaInicial = $_GET["fechaInicial"];
+                                $fechaFinal = $_GET["fechaFinal"];
+                                } else {
+                                    $fechaInicial = null;
+                                    $fechaFinal = null;
+                                    }
+                                $venta = ModeloVentas::mdlRangoVentas($fechaInicial, $fechaFinal);
+                                foreach($venta as $key => $value){
+                                    echo '<tr>
+                                            <td>'. ($key+1). '</td>
+                                            <td>V-'.$value["venta_id"].'</td>
+                                            <td>'. $value["cliente_nombre"]. '</td>
+                                            <td>' . $value["venta_metodo_pago"] . '</td>
+                                            <td>'. $value["venta_total"].'</td>
+                                            <td>'. $value["venta_total"]. '</td>
+                                            <td>' . $value["venta_fecha"] . '</td>
+                                            <td>' . $value["usuario_nombre"] . '</td>
+                                            <td>' . $value["sucursal_nombre"] . '</td>';
+                                    echo'<td>
+                                        <div class="btn-group"><button class="btn btn-info btnVerVenta" idVenta="' . $value["venta_id"] . '"><i class="fas fa-file-invoice"></i></button></div>
+                                    </td>
+                                </tr>
+                                ';
+
+
+                                }
+                        ?>
+                    </tbody>
                 </table>
             </div>
             <!-- /.box-body -->
         </div>
+        
     </section>
     <!-- /.content -->
 </div>

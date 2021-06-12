@@ -37,8 +37,8 @@ $_SESSION['Ancho'] = null;
     <link rel="stylesheet" href="vistas/plugins/iCheck/all.css">
     <!-- TIME PICKER-->
 
-    <link rel="stylesheet" href="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <link rel="stylesheet" href="vistas/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.css">
     <!-- jQuery 3 -->
     <script src="vistas/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
@@ -62,9 +62,7 @@ $_SESSION['Ancho'] = null;
     <script src="vistas/bower_components/select2/dist/js/select2.full.js"></script>
     <!-- iCheck 1.0.1 -->
     <script src="vistas/plugins/iCheck/icheck.min.js"></script>
-    <!-- date range picker -->
-    <script src="vistas/bower_components/moment/min/moment.min.js"></script>
-    <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+
 
     <!-- InputMask -->
     <script src="vistas/plugins/input-mask/jquery.inputmask.js"></script>
@@ -84,6 +82,9 @@ $_SESSION['Ancho'] = null;
 
     <!-- ChartJS http://www.chartjs.org/-->
     <script src="vistas/bower_components/Chart.js/Chart.js"></script>
+    <!-- date range picker -->
+    <script src="vistas/bower_components/moment/min/moment.min.js"></script>
+    <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
     <!-- css personalizado -->
     <link rel="stylesheet" href="vistas/css/personalizado.css">
 
@@ -165,6 +166,7 @@ if (isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok") {
 <script src="vistas/js/prestamos.js"></script>
 <script src="vistas/js/agenda.js"></script>
 <script src="vistas/js/historial-ventas.js"></script>
+<script src="vistas/js/reportes.js"></script>
 </body>
 
 

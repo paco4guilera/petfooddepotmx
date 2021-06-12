@@ -8,9 +8,15 @@ class TablaVentas
     =============================================*/
     public function mostrarTablaVentas()
     {
-        $item = null;
-        $valor = null;
-        $venta = ModeloVentas::mdlMostrarVentas($item, $valor);
+        if(isset($_GET["fechaInicial"])){
+
+            $fechaInicial = $_GET["fechaInicial"];
+            $fechaFinal = $_GET["fechaFinal"];
+        }else{
+            $fechaInicial = null;
+            $fechaFinal = null;
+        }
+        $venta = ModeloVentas::mdlRangoVentas($fechaInicial, $fechaFinal);
         $datosJson = '{
 		"data": [';
         for ($i = 0; $i < count($venta); $i++) {
