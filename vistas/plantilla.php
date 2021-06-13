@@ -39,6 +39,10 @@ $_SESSION['Ancho'] = null;
 
     <link rel="stylesheet" href="vistas/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+
+    <!-- morris -->
+    <link rel="stylesheet" href="vistas/bower_components/morris.js/morris.css">
+
     <!-- jQuery 3 -->
     <script src="vistas/bower_components/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
@@ -85,6 +89,10 @@ $_SESSION['Ancho'] = null;
     <!-- date range picker -->
     <script src="vistas/bower_components/moment/min/moment.min.js"></script>
     <script src="vistas/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <!-- morris chart -->
+    <script src="vistar/bower_components/raphael/raphael.min.js"></script>
+    <script src="vistar/bower_components/morris.js/morris.min.js"></script>
+
     <!-- css personalizado -->
     <link rel="stylesheet" href="vistas/css/personalizado.css">
 
