@@ -30,7 +30,24 @@ class ModeloProductos
         }
         $stmt = null;
     }
+    /*=============================================
+	MOSTRAR PRODUCTOS MÁS VENDIDOS
+	=============================================*/
 
+    static public function mdlMostrarProductosMasVendidos()
+    {
+
+            $estado = "producto_estado";
+            $val = "1";
+            $stmt = Conexion::conectar()->prepare("SELECT * FROM productos WHERE $estado = :$estado ORDER BY producto_ventas DESC");
+            $stmt->bindParam(":" . $estado, $val, PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return $stmt->fetchAll();
+        
+        $stmt = null;
+    }
     /*=============================================
 	REGISTRO DE PRODUCTO
 	=============================================*/
@@ -169,6 +186,21 @@ ACTUALIZAR DATOS PRODUCTOS AL VENDER
         } else {
             return "error";
         }
+        $stmt = null;
+    }
+    /*=============================================
+	MOSTRAR SUMA VENTAS
+	=============================================*/
+
+    static public function mdlMostrarSumaVentas($tabla)
+    {
+
+        $stmt = Conexion::conectar()->prepare("SELECT SUM(producto_ventas) as total FROM $tabla");
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
         $stmt = null;
     }
 }

@@ -35,7 +35,41 @@ if ($_SESSION["rol"] == "Vendedor") {
 
             </div>
             <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <?php
+                        include "reportes/grafico-ventas.php";
+                        ?>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
 
+                        <?php
+
+                        include "reportes/productos-mas-vendidos.php";
+
+                        ?>
+
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+
+                        <?php
+
+                        include "reportes/vendedores.php";
+
+                        ?>
+
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+
+                        <?php
+
+                        include "reportes/compradores.php";
+
+                        ?>
+
+                    </div>
+                </div>
             </div>
             <!-- /.box-body -->
         </div>

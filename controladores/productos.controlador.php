@@ -13,6 +13,15 @@ class ControladorProductos
         $respuesta = ModeloProductos::mdlMostrarProductos($tabla, $item, $valor);
         return $respuesta;
     }
+    /*=============================================
+	MOSTRAR PRODUCTOS MÁS VENDIDOS
+	=============================================*/
+
+    static public function ctrMostrarProductosMasVendidos()
+    {
+        $respuesta = ModeloProductos::mdlMostrarProductosMasVendidos();
+        return $respuesta;
+    }
 
     /*=============================================
 	CREAR PRODUCTO
@@ -307,5 +316,18 @@ class ControladorProductos
                     </script>';
             }
         }
+    }
+    /*=============================================
+	MOSTRAR SUMA VENTAS
+	=============================================*/
+
+    static public function ctrMostrarSumaVentas()
+    {
+
+        $tabla = "productos";
+
+        $respuesta = ModeloProductos::mdlMostrarSumaVentas($tabla);
+
+        return $respuesta;
     }
 }

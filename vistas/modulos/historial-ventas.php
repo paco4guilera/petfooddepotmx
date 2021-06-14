@@ -64,8 +64,8 @@ if ($_SESSION["rol"] == "Vendedor") {
                                             <td>V-'.$value["venta_id"].'</td>
                                             <td>'. $value["cliente_nombre"]. '</td>
                                             <td>' . $value["venta_metodo_pago"] . '</td>
-                                            <td>'. $value["venta_total"].'</td>
-                                            <td>'. $value["venta_total"]. '</td>
+                                            <td>$ '. $value["venta_total"].'</td>
+                                            <td>$ '. $value["venta_total"]. '</td>
                                             <td>' . $value["venta_fecha"] . '</td>
                                             <td>' . $value["usuario_nombre"] . '</td>
                                             <td>' . $value["sucursal_nombre"] . '</td>';
