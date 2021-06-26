@@ -152,6 +152,13 @@ class ControladorVentas
             $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
             if ($respuesta == "ok") {
                 /*=============================================
+                Traer última venta para registar la venta del
+                Producto  en ventas_productos                        
+                =============================================*/
+                $ultimaVenta = ModeloVentas::mdlUltimaVenta($_POST["clienteFormulario"]);
+                $fechaUltimaVenta = $ultimaVenta["MAX(venta_id)"];
+
+                /*=============================================
                 Ver si pidió préstamo                             
                 =============================================*/
                 if (
@@ -163,13 +170,12 @@ class ControladorVentas
                     /*=============================================
                     si pidió préstamo, traer el id de la venta recien creada                             
                     =============================================*/
-                    $ultimaVenta = ModeloVentas::mdlUltimaVenta($_POST["clienteFormulario"]);
                     //Preparar los datos para el prestamo
                     $datosP = array(
                         "monto" => $total,
                         "cliente" => $_POST["clienteFormulario"],
                         "sesion" => $_SESSION["sesion"],
-                        "venta" => $ultimaVenta["MAX(venta_id)"],
+                        "venta" => $fechaUltimaVenta,
                         "caducidad" => $_POST["listaMetodoPago"]
                     );
                     //crear el prestamo

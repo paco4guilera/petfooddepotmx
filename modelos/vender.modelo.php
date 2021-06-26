@@ -153,7 +153,7 @@ class ModeloVentas
     =============================================*/
     static public function mdlUltimaVenta($cliente)
     {
-        $stmt = Conexion::conectar()->prepare("SELECT MAX(venta_id) FROM ventas WHERE cliente_id =:cliente_id");
+        $stmt = Conexion::conectar()->prepare("SELECT MAX(venta_id), venta_fecha FROM ventas WHERE cliente_id =:cliente_id");
         $stmt->bindParam(":cliente_id", $cliente, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
@@ -341,4 +341,37 @@ class ModeloVentas
 
         $stmt = null;
     }
+    /*================================================================================================================================
+                                                        VENTAS PRODUCTOS
+	=================================================================================================================================*/
+    /* Registro de los productos en las ventas */
+    static public function mdlRegistroProductoVenta($datos){
+
+        $stmt = Conexion::conectar()->prepare("INSERT INTO ventas_productos( 
+                                                        producto_nombre, 
+                                                        producto_cantidad,
+                                                        venta_fecha, 
+                                                        venta_id, 
+                                                        sesion_id)
+                                                VALUES( :producto_nombre, 
+                                                        :producto_cantidad,
+                                                        :venta_fecha, 
+                                                        :venta_id, 
+                                                        :sesion_id)");
+
+        $stmt->bindParam(":producto_nombre", $datos["nombre"], PDO::PARAM_STR);
+        $stmt->bindParam(":producto_cantidad", $datos["cantidad"], PDO::PARAM_INT);
+        $stmt->bindParam(":venta_fecha", $datos["fecha"], PDO::PARAM_STR);
+        $stmt->bindParam(":venta_id", $datos["id"], PDO::PARAM_INT);
+        $stmt->bindParam(":id", $datos["sesion"], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        $stmt = null;
+        
+    }
+    
 }
