@@ -49,74 +49,16 @@ class ControladorVentas
             }
 
 
-            $listaProductos = json_decode($_POST["listaProductos"], true);
 
-            $totalProductosComprados = array();
-
-            foreach ($listaProductos as $key => $value) {
-
-                array_push($totalProductosComprados, $value["cantidad"]);
-
-                $tablaProductos = "productos";
-
-                $item = "producto_nombre";
-                $valor = $value["nombre"];
-
-                $traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor);
-
-                $item1a = "producto_ventas";
-                $valor1a = $value["cantidad"] + $traerProducto["producto_ventas"];
-
-                $nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
-                $tablaInventario = "inventario";
-                $item1b = "producto_inventario";
-                $valor1b = $value["inventario"];
-                $sucursal = $_SESSION["sucursal"];
-                $nuevoStock = ModeloProductos::mdlActualizarInventario($tablaInventario, $item1b, $valor1b, $valor, $sucursal);
-            }
 
             $tablaClientes = "clientes";
 
             $item = "cliente_id";
             $valor = $_POST["clienteFormulario"];
-
+            $valorClienteId = $_POST["clienteFormulario"];
             $traerCliente = ModeloClientes::mdlMostrarClientes($tablaClientes, $item, $valor);
-            $item1a = "cliente_compras";
-            $valor1a = array_sum($totalProductosComprados) + $traerCliente["cliente_compras"];
-            $comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valor);
-            /*=============================================
-            descuento de puntos al cliente                      
-            =============================================*/
-            if ($_POST["puntosClienteUsar"] > 0) {
-                $puntosAUsar = $_POST["puntosClienteUsar"];
-                //Traer todas las tuplas de puntos del cliente ordenadas por fecha en orden ascendente
-                $puntos = ModeloClientes::mdlMostrarPuntos($valor);
-                //evaluar una por una si es mayor a los puntos a usar y hacer la resta
-                //si la tupla tiene menos de los que va a usar, elimina la tupla y resta los puntos a usar para 
-                //pasar a la siguiente tupla y restar lo que falta
-                foreach ($puntos as $key => $value) {
-                    if ($value["puntos_cantidad"] <= $puntosAUsar) {
-                        $puntosAUsar -= $value["puntos_cantidad"];
-                        ModeloClientes::mdlBorrarPuntos($value["puntos_id"]);
-                    } else {
-                        $actualizarPuntos = $value["puntos_cantidad"] - $puntosAUsar;
-                        ModeloClientes::mdlDescontarPuntos($value["puntos_id"], $actualizarPuntos);
-                        $puntosAUsar = 0;
-                    }
-                }
-            }
-            /*=============================================
-            Agregar los puntos que se obtuvieron en la compra
-            =============================================*/
-            if ($_POST["totalPuntos"] > 0) {
-                $puntosNuevos = $_POST["totalPuntos"];
-                ModeloClientes::mdlAgregarPuntos($valor, $puntosNuevos);
-            }
-            /*=============================================
             
-            =============================================*/
-            $idCliente = $traerCliente["cliente_id"];
-            $descuento = ModeloClientes::mdlMostrarDescuento($item, $idCliente);
+            
             /*=============================================
 			GUARDAR LA COMPRA
 			=============================================*/
@@ -126,6 +68,12 @@ class ControladorVentas
             $iva = $total * 0.16;
             $iva = number_format($iva, 2, '.', '');
             $impuestoAdicional = 0;
+            /*=============================================
+            
+            =============================================*/
+            $idCliente = $traerCliente["cliente_id"];
+            $descuento = ModeloClientes::mdlMostrarDescuento($item, $idCliente);
+
             if ($_POST["listaMetodoPago"] == "Tarjeta") {
                 $impuestoAdicional = $total * 0.035;
             }
@@ -152,11 +100,76 @@ class ControladorVentas
             $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
             if ($respuesta == "ok") {
                 /*=============================================
+                Actualización de inventario                        
+                =============================================*/
+                $listaProductos = json_decode($_POST["listaProductos"], true);
+
+                $totalProductosComprados = array();
+
+                foreach ($listaProductos as $key => $value) {
+
+                    array_push($totalProductosComprados, $value["cantidad"]);
+
+                    $tablaProductos = "productos";
+
+                    $item = "producto_nombre";
+                    $valor = $value["nombre"];
+
+                    $traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor);
+
+                    $item1a = "producto_ventas";
+                    $valor1a = $value["cantidad"] + $traerProducto["producto_ventas"];
+
+                    $nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
+                    $tablaInventario = "inventario";
+                    $item1b = "producto_inventario";
+                    $valor1b = $value["inventario"];
+                    $sucursal = $_SESSION["sucursal"];
+                    $nuevoStock = ModeloProductos::mdlActualizarInventario($tablaInventario, $item1b, $valor1b, $valor, $sucursal);
+
+                }
+                /*=============================================
+                Actualización de compras del cliente                     
+                =============================================*/
+                $item1a = "cliente_compras";
+                $valor1a = array_sum($totalProductosComprados) + $traerCliente["cliente_compras"];
+                $comprasCliente = ModeloClientes::mdlActualizarCliente($tablaClientes, $item1a, $valor1a, $valorClienteId);
+                /*=============================================
+                descuento de puntos al cliente                      
+                =============================================*/
+                if ($_POST["puntosClienteUsar"] > 0) {
+                    $puntosAUsar = $_POST["puntosClienteUsar"];
+                    //Traer todas las tuplas de puntos del cliente ordenadas por fecha en orden ascendente
+                    $puntos = ModeloClientes::mdlMostrarPuntos($valorClienteId);
+                    //evaluar una por una si es mayor a los puntos a usar y hacer la resta
+                    //si la tupla tiene menos de los que va a usar, elimina la tupla y resta los puntos a usar para 
+                    //pasar a la siguiente tupla y restar lo que falta
+                    foreach ($puntos as $key => $value) {
+                        
+                        if ($value["puntos_cantidad"] <= $puntosAUsar) {
+                            $puntosAUsar -= $value["puntos_cantidad"];
+                            ModeloClientes::mdlBorrarPuntos($value["puntos_id"]);
+                        } else {
+                            $actualizarPuntos = $value["puntos_cantidad"] - $puntosAUsar;
+                            ModeloClientes::mdlDescontarPuntos($value["puntos_id"], $actualizarPuntos);
+                            $puntosAUsar = 0;
+                        }
+                    }
+                }
+                /*=============================================
+                Agregar los puntos que se obtuvieron en la compra
+                =============================================*/
+                if ($_POST["totalPuntos"] > 0) {
+                    $puntosNuevos = $_POST["totalPuntos"];
+                    ModeloClientes::mdlAgregarPuntos($valorClienteId, $puntosNuevos);
+                }
+                /*=============================================
                 Traer última venta para registar la venta del
                 Producto  en ventas_productos                        
                 =============================================*/
                 $ultimaVenta = ModeloVentas::mdlUltimaVenta($_POST["clienteFormulario"]);
-                $fechaUltimaVenta = $ultimaVenta["MAX(venta_id)"];
+                $idUltimaVenta = $ultimaVenta["MAX(venta_id)"];
+                $fechaUltimaVenta = $ultimaVenta["venta_fecha"];
 
                 /*=============================================
                 Ver si pidió préstamo                             
@@ -175,7 +188,7 @@ class ControladorVentas
                         "monto" => $total,
                         "cliente" => $_POST["clienteFormulario"],
                         "sesion" => $_SESSION["sesion"],
-                        "venta" => $fechaUltimaVenta,
+                        "venta" => $idUltimaVenta,
                         "caducidad" => $_POST["listaMetodoPago"]
                     );
                     //crear el prestamo
