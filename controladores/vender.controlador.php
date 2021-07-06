@@ -100,7 +100,14 @@ class ControladorVentas
             $respuesta = ModeloVentas::mdlIngresarVenta($tabla, $datos);
             if ($respuesta == "ok") {
                 /*=============================================
-                Actualización de inventario                        
+                Traer última venta para registar la venta del
+                Producto  en ventas_productos                        
+                =============================================*/
+                $ultimaVenta = ModeloVentas::mdlUltimaVenta($_POST["clienteFormulario"]);
+                $idUltimaVenta = $ultimaVenta["MAX(venta_id)"];
+                $fechaUltimaVenta = $ultimaVenta["venta_fecha"];
+                /*=============================================
+                Actualización de inventario y registro de ventas en ventas_productos                 
                 =============================================*/
                 $listaProductos = json_decode($_POST["listaProductos"], true);
 
@@ -114,18 +121,23 @@ class ControladorVentas
 
                     $item = "producto_nombre";
                     $valor = $value["nombre"];
-
                     $traerProducto = ModeloProductos::mdlMostrarProductos($tablaProductos, $item, $valor);
 
                     $item1a = "producto_ventas";
                     $valor1a = $value["cantidad"] + $traerProducto["producto_ventas"];
 
-                    $nuevasVentas = ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
+                    ModeloProductos::mdlActualizarProducto($tablaProductos, $item1a, $valor1a, $valor);
                     $tablaInventario = "inventario";
                     $item1b = "producto_inventario";
                     $valor1b = $value["inventario"];
                     $sucursal = $_SESSION["sucursal"];
-                    $nuevoStock = ModeloProductos::mdlActualizarInventario($tablaInventario, $item1b, $valor1b, $valor, $sucursal);
+                    ModeloProductos::mdlActualizarInventario($tablaInventario, $item1b, $valor1b, $valor, $sucursal);
+
+                    $datosPV = array(
+                        "nombre"=> $value["nombre"],
+                        "cantidad"=>$value["cantidad"],
+                        "venta"=>$idUltimaVenta);
+                    ModeloProductos::mdlInsertarProductosVentas($datosPV);
 
                 }
                 /*=============================================
@@ -163,13 +175,7 @@ class ControladorVentas
                     $puntosNuevos = $_POST["totalPuntos"];
                     ModeloClientes::mdlAgregarPuntos($valorClienteId, $puntosNuevos);
                 }
-                /*=============================================
-                Traer última venta para registar la venta del
-                Producto  en ventas_productos                        
-                =============================================*/
-                $ultimaVenta = ModeloVentas::mdlUltimaVenta($_POST["clienteFormulario"]);
-                $idUltimaVenta = $ultimaVenta["MAX(venta_id)"];
-                $fechaUltimaVenta = $ultimaVenta["venta_fecha"];
+                
 
                 /*=============================================
                 Ver si pidió préstamo                             

@@ -189,6 +189,23 @@ ACTUALIZAR DATOS PRODUCTOS AL VENDER
         $stmt = null;
     }
     /*=============================================
+	INSERTAR EN PORDUCTOS_VENTAS
+	=============================================*/
+    static public function mdlInsertarProductosVentas($datos){
+        $stmt = Conexion::conectar()->prepare("INSERT INTO ventas_productos 
+                                                            (producto_nombre,producto_cantidad,venta_id)
+                                                            VALUES(:producto_nombre,:producto_cantidad,:venta_id)");
+        $stmt->bindParam(":producto_nombre",$datos["nombre"],PDO::PARAM_STR);
+        $stmt->bindParam(":producto_cantidad",$datos["cantidad"],PDO::PARAM_STR);
+        $stmt->bindParam(":venta_id",$datos["venta"],PDO::PARAM_STR);
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        }
+        $stmt = null;
+        }
+    /*=============================================
 	MOSTRAR SUMA VENTAS
 	=============================================*/
 

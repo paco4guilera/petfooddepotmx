@@ -4,14 +4,19 @@ if (isset($_GET["fechaInicial"])) {
 
     $fechaInicial = $_GET["fechaInicial"];
     $fechaFinal = $_GET["fechaFinal"];
+    $op = $_GET["op"];
 } else {
     $fechaInicial = null;
     $fechaFinal = null;
+    $op = null;
 }
 $venta = ModeloVentas::mdlRangoVentas($fechaInicial, $fechaFinal);
 $arrayFechas = array();
 $arrayVentas = array();
 $sumaPagosMes = array();
+$sumaPagoHora = array();
+$sumaPagoDias = array();
+$sumaPagoSemanas = array();
 foreach ($venta as $key => $value) {
 
     #Capturamos sólo el año y el mes
@@ -28,7 +33,7 @@ foreach ($venta as $key => $value) {
 $noRepetirFechas = array_unique($arrayFechas);
 ?>
 <!--/*=============================================
-CAMBIO EN EFECTIVO
+Gráfico de ventas
 =============================================*/-->
 <div class="box box-solid bg-teal-gradient">
 

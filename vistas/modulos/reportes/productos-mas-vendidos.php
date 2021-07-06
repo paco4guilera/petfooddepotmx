@@ -3,7 +3,7 @@
 $productos = ControladorProductos::ctrMostrarProductosMasVendidos();
 
 $colores = array("red", "green", "yellow", "aqua", "purple", "blue", "cyan", "magenta", "orange", "gold");
-
+//agregar parametros de fechas y traer el total de ventas dentro de ese rango
 $totalVentas = ControladorProductos::ctrMostrarSumaVentas();
 
 

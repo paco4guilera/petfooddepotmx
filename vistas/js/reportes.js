@@ -6,7 +6,8 @@ if (localStorage.getItem("capturarRango2") != null) {
 } else {
     $("#daterange-btn2 span").html('<i class="fa fa-calendar"></i> Rango de fecha');
 }
-
+var resp = 'no';
+var op = 'no';//variable para saber qué opción fue seleccionada del date range picker
 /*=============================================
 RANGO DE FECHAS
 =============================================*/
@@ -25,16 +26,12 @@ $('#daterange-btn2').daterangepicker(
   },
   function (start, end) {
     $('#daterange-btn2 span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-
+    //agregar combobox de dias/semanas
     var fechaInicial = start.format('YYYY-MM-DD');
-
     var fechaFinal = end.format('YYYY-MM-DD');
-
     var capturarRango = $("#daterange-btn2 span").html();
-   
-   	localStorage.setItem("capturarRango2", capturarRango);
-
-   	window.location = "index.php?ruta=reporte-ventas&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+    localStorage.setItem("capturarRango2", capturarRango);
+    window.location = "index.php?ruta=reporte-ventas&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal+"&op="+op;
 
   }
 
@@ -54,27 +51,37 @@ CAPTURAR HOY
 
 $(".daterangepicker.opensright .ranges li").on("click", function(){
 
-	var textoHoy = $(this).attr("data-range-key");
+	op = $(this).attr("data-range-key");
 
-	if(textoHoy == "Hoy"){
+  if (op == "Hoy") {
 
-		var d = new Date();
+    var d = new Date();
 		
-		var dia = d.getDate();
-		var mes = d.getMonth()+1;
-		var año = d.getFullYear();
+    var dia = d.getDate();
+    var mes = d.getMonth() + 1;
+    var año = d.getFullYear();
 
-		dia = ("0"+dia).slice(-2);
-		mes = ("0"+mes).slice(-2);
+    dia = ("0" + dia).slice(-2);
+    mes = ("0" + mes).slice(-2);
 
-		var fechaInicial = año+"-"+mes+"-"+dia;
-		var fechaFinal = año+"-"+mes+"-"+dia;	
+    var fechaInicial = año + "-" + mes + "-" + dia;
+    var fechaFinal = año + "-" + mes + "-" + dia;
 
-    	localStorage.setItem("capturarRango2", "Hoy");
+    localStorage.setItem("capturarRango2", "Hoy");
 
-        window.location = "index.php?ruta=reporte-ventas&fechaInicial="+fechaInicial+"&fechaFinal="+fechaFinal;
+    window.location = "index.php?ruta=reporte-ventas&fechaInicial=" + fechaInicial + "&fechaFinal=" + fechaFinal + "&op=" + op;;
 
 
-	}
+  } else if (op == "Últimos 7 días") {
+    op = "ultimos7";
+  } else if (op == "Últimos 30 días") {
+    op = "ultimos30";
+  } else if (op == "Este mes") {
+    op = "estemes";
+  } else if (op == "Último mes") {
+    op = "ultimomes";
+  } else if (op == "Rango Personalizado") {
+    op = "rango";
+  }
 
 })
