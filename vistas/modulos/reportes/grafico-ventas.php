@@ -14,8 +14,11 @@ $venta = ModeloVentas::mdlRangoVentas($fechaInicial, $fechaFinal);
 $arrayFechas = array();
 $arrayVentas = array();
 $sumaPagosMes = array();
+
 $sumaPagoHora = array();
+
 $sumaPagoDias = array();
+
 $sumaPagoSemanas = array();
 foreach ($venta as $key => $value) {
 
