@@ -13,27 +13,50 @@ if (isset($_GET["fechaInicial"])) {
 $venta = ModeloVentas::mdlRangoVentas($fechaInicial, $fechaFinal);
 $arrayFechas = array();
 $arrayVentas = array();
-$sumaPagosMes = array();
-
-$sumaPagoHora = array();
-
-$sumaPagoDias = array();
-
-$sumaPagoSemanas = array();
+$sumaPagos= array();
+$l=7;
+$inicio= 0;
+switch($_GET["op"]){
+    case "Hoy":case "Ayer":
+        $l = 2;
+        $inicio = 11;
+        break;
+    case "ultimos7":
+    case "ultimos30":
+    case "estemes":
+    case "ultimomes":
+    case "rango":
+        $l = 10;
+        break;
+}
 foreach ($venta as $key => $value) {
 
     #Capturamos sólo el año y el mes
-    $fecha = substr($value["venta_fecha"], 0, 7);
+    $fecha = substr($value["venta_fecha"], $inicio,$l);
     #Introducir las fechas en arrayFechas
     array_push($arrayFechas, $fecha);
     #Capturamos las ventas
     $arrayVentas = array($fecha => $value["venta_total"]);
     #Sumamos los pagos que ocurrieron el mismo mes
     foreach ($arrayVentas as $key => $value) {
-        $sumaPagosMes[$key] += $value;
+        $sumaPagos[$key] += $value;
     }
 }
 $noRepetirFechas = array_unique($arrayFechas);
+if($_GET=="rango" && sizeof($noRepetirFechas)>30){
+    foreach ($venta as $key => $value) {
+        #Capturamos sólo el año y el mes
+        $fecha = substr($value["venta_fecha"], 0, 7);
+        #Introducir las fechas en arrayFechas
+        array_push($arrayFechas, $fecha);
+        #Capturamos las ventas
+        $arrayVentas = array($fecha => $value["venta_total"]);
+        #Sumamos los pagos que ocurrieron el mismo mes
+        foreach ($arrayVentas as $key => $value) {
+            $sumaPagos[$key] += $value;
+        }
+    }
+}
 ?>
 <!--/*=============================================
 Gráfico de ventas
@@ -57,6 +80,7 @@ Gráfico de ventas
 </div>
 
 <script>
+    
     var line = new Morris.Line({
         element: 'line-chart-ventas',
         resize: true,
@@ -64,9 +88,9 @@ Gráfico de ventas
         <?php
             if ($noRepetirFechas != null) {
                 foreach ($noRepetirFechas as $key) {
-                    echo "{ y: '" . $key . "', ventas: " . $sumaPagosMes[$key] . " },";
+                    echo "{ y: '" . $key . "', ventas: " . $sumaPagos[$key] . " },";
                 }
-                echo "{y: '" . $key . "', ventas: " . $sumaPagosMes[$key] . " }";
+                echo "{y: '" . $key . "', ventas: " . $sumaPagos[$key] . " }";
             } else {
                 echo "{ y: '0', ventas: '0' }";
             }
