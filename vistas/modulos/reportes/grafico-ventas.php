@@ -43,7 +43,7 @@ foreach ($venta as $key => $value) {
     }
 }
 $noRepetirFechas = array_unique($arrayFechas);
-if($_GET=="rango" && sizeof($noRepetirFechas)>30){
+if($_GET["op"]=="rango" && sizeof($noRepetirFechas)>30){
     foreach ($venta as $key => $value) {
         #Capturamos sólo el año y el mes
         $fecha = substr($value["venta_fecha"], 0, 7);
